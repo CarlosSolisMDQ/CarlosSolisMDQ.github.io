@@ -3,7 +3,7 @@ title: About
 layout: page
 ---
 
-#modificacion de prueba
+# modificacion de prueba
 
 
 Hey! This is the "Leaf" Jekyll theme created by <a rel="me" target="_blank" href="https://twitter.com/_SupunKavinda">Supun Kavinda</a>.
