@@ -1,0 +1,69 @@
+---
+layout: post
+author: Carlos
+---
+
+
+
+
+<p>Hace un par de meses empecé a aprender java y viendo un video de S4vitar de la resolucion de una maquina de <strong>Hack the box</strong> él pone un pequeño programa para averiguar que SO corre la maquina objetivo sin usar nmap, solo dependiendo de la informacion que nos retorna un Ping a la ip de la victima recogiendo el valor de <strong>TTL</strong>
+
+<p>La idea es que si el ttl esta en el rango de 0 a 64 es una maquina linux (o probablemente lo sea) y si esta entre 65 y 128 es una maquina windows</p>
+
+<p><strong>S4vitar</strong> hizo el codigo en Python pero a mi la verdad no me gusta así que traduje la funcionalidad a Java. Mi primera version ademas de visualizarlo guardaba el output del ping en un archivo, pero lo saqué porque era al pedo la verdad</p>
+
+{% highlight java %}
+
+import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+public class IdentificadorDeSistemaOperativo {
+
+
+    public static void main(String[] args) throws IOException {
+        
+        if (args.length < 1 || args.length > 1){
+            System.err.println("**** El uso de la app es: java IdentificadorDeSistemaOperativo [ARGS]");
+            System.err.println("**** los [ARGUMENTOS] son la ip de la maquina objetivo");
+            System.exit(1);
+        }
+        
+        
+        
+        Process process = Runtime.getRuntime().exec("ping -c 1 "+ args[0]);
+        InputStream input = new BufferedInputStream(process.getInputStream());
+        InputStreamReader inputStream = new InputStreamReader(input);
+        BufferedReader bufferReader = new BufferedReader(inputStream);
+
+
+        String output = null;
+        while((bufferReader.readLine())!=null){
+            output += bufferReader.readLine();
+        }
+
+        String[] array = output.split(" ");
+        Pattern pattern = Pattern.compile("^ttl.*");
+        String stringTTL = null;
+
+        for(String word: array){
+            Matcher match = pattern.matcher(word);
+            if (match.matches()) {
+                stringTTL = word;
+            }
+        }
+        stringTTL = stringTTL.replaceAll("\\D+", "");
+
+        int ttl = Integer.parseInt(stringTTL);
+
+        if (ttl >= 0 && ttl <= 64){
+            System.out.println("La maquina objetivo es un linux");
+        } else if (ttl >= 65 && ttl <= 128){
+            System.out.println("La maquina objetivo es un windows");
+        }
+
+    }
+}
+
+{% endhighlight %}
