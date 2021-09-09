@@ -1,0 +1,49 @@
+### Ayer me topé con la idea de querer leer un archivo csv para alimentar el chart de la librería Jfreechart y esta es la solucion mas simple.
+
+Si bien se puede hacer la lectura de manera raw se puede complicar para archivos csv complejos, peeeero yo igual solo quiero alimentar al chart con archivos de dos columnas.
+
+La idea es invocar la librería OpenCSV que nos hace el trabajo por nosotros. En intellij con maven se puede agregar con *control+shift+alt+s  modulos>dependencias>+>librerias>maven>OpenCSV*
+
+Este codigo solo imprime cada linea del archivo en la consola, pero se puede adaptar para que cada linea alimente el dataset.
+
+el archivo de prueba es: 
+
+
+
+
+{% highlight java %}
+
+import au.com.bytecode.opencsv.CSVReader;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+
+public class LectorDeArchivoCSV {
+
+    public static final char SEPARADOR=';';
+    public static final char TEXTO='"';
+
+    public static void main(String[] args) throws IOException {
+
+        CSVReader reader = null;
+        try {
+            reader = new CSVReader(new FileReader("/home/carlos/Sample-Bulk-Recipient.csv"),SEPARADOR,TEXTO);
+            String[] nextLine=null;
+
+            while ((nextLine = reader.readNext()) != null) {
+                System.out.println(Arrays.toString(nextLine));
+            }
+
+        } catch (Exception e) {
+         System.err.println("Algo salió mal en la lectura de archivo");
+         System.exit(1);
+        } finally {
+            if (null != reader) {
+                reader.close();
+            }
+        }
+    }
+}
+
+{% endhighlight %}
