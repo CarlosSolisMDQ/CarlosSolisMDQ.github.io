@@ -3,6 +3,8 @@ layout: post
 author: Carlos
 ---
 
+![chartConJFreeFrame](../imagenes/chartConJFreeFrame.png)
+
 ### Apunte de como usar la librería jfreechart para un linechart común y corriente.
 
 *Primero hay que instalar la librería, si tenés Maven instalado y usas IntelliJ como IDE lo unico que hay que hacer es:
@@ -41,7 +43,7 @@ public class LineChart extends JFrame{
 
 {% endhighlight %}
 
-Dentro del JPanel creamos el chart
+Dentro del JPanel creamos el chart.
 
 {% highlight java %}
 
