@@ -1,3 +1,8 @@
+---
+layout: post
+author: Carlos
+---
+
 ### Ayer me topé con la idea de querer leer un archivo csv para alimentar el chart de la librería Jfreechart y esta es la solucion mas simple.
 
 Si bien se puede hacer la lectura de manera raw se puede complicar para archivos csv complejos, peeeero yo igual solo quiero alimentar al chart con archivos de dos columnas.
