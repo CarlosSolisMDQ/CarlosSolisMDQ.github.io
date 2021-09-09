@@ -6,9 +6,6 @@ La idea es invocar la librería OpenCSV que nos hace el trabajo por nosotros. En
 
 Este codigo solo imprime cada linea del archivo en la consola, pero se puede adaptar para que cada linea alimente el dataset.
 
-el archivo de prueba es: 
-
-
 
 
 {% highlight java %}
@@ -28,7 +25,7 @@ public class LectorDeArchivoCSV {
 
         CSVReader reader = null;
         try {
-            reader = new CSVReader(new FileReader("/home/carlos/Sample-Bulk-Recipient.csv"),SEPARADOR,TEXTO);
+            reader = new CSVReader(new FileReader("Sample-Bulk-Recipient.csv"),SEPARADOR,TEXTO);
             String[] nextLine=null;
 
             while ((nextLine = reader.readNext()) != null) {
