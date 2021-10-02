@@ -3,9 +3,9 @@ layout: post
 author: Carlos
 ---
 
-##Contador de palabras en java.
+## Contador de palabras en java.
 
-###Ayer me toco contar las palabras de un archivo txt y hice esta pequeña clase para hacerlo.
+### Ayer me toco contar las palabras de un archivo txt y hice esta pequeña clase para hacerlo.
 
 Se perfectamente que un procesador de texto tambien lo hace, pero yo quería contar las repeticiones 
 de las palabras y lo solucione con un hashmap con el formato <key, value>
