@@ -1,0 +1,90 @@
+---
+layout: post
+author: Carlos
+---
+
+##Contador de palabras en java.
+
+###Ayer me toco contar las palabras de un archivo txt y hice esta pequeña clase para hacerlo.
+
+Se perfectamente que un procesador de texto tambien lo hace, pero yo quería contar las repeticiones 
+de las palabras y lo solucione con un hashmap con el formato <key, value>
+
+Despues buscando un poco en internet encontre una forma mas escueta de hacerlo con los metodos estaticos de Java.
+
+{% highlight java %}
+
+public static  Map<String, Long>  frequencyMap(Stream<String> elements) {
+        return elements.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+    }
+
+    public static void main( String args[] ) {
+        List<String> words = Arrays.asList("hello", "hello", "mighty", "pepe");
+        System.out.println(frequencyMap(words.stream()));
+    }
+
+{% endhighlight %}
+
+Igual quiero dejar guardada mi solucion mucho mas rudimentaria porque la hice sin buscar en internet y me da lastima perderla
+fue una buena practica mientras voy aprendiendo.
+
+
+{% highlight java %}
+
+import java.io.*;
+import java.util.HashMap;
+
+public class ContadorDePalabras {
+
+    public static void main(String[] args) throws IOException, FileNotFoundException {
+
+        BufferedReader reader = null;
+        HashMap <String, Integer> map = new HashMap <String, Integer>();
+
+        try{
+           reader = new BufferedReader(new FileReader(args[0]));
+        } catch (FileNotFoundException e){
+            System.err.println(e);
+        }
+        String str = "";
+        String[] arrStrPalabras;
+
+        String regex = "[^a-zA-Z0-9À-ÿ\\u00f1\\u00d1]";
+
+        while ((str = reader.readLine()) != null){
+            arrStrPalabras = str.split(" ");
+            for(String a: arrStrPalabras){
+                a = a.replaceAll(regex, "");
+                if(map.containsKey(a)){
+                    int temp = map.get(a);
+                    map.replace(a, (temp + 1));
+                } else {
+                    map.put(a, 1);
+                }
+
+            }
+        }
+
+
+        //System.out.println("map = " + map);
+
+        PrintWriter out;
+        int sumatoria = 0;
+        try{
+            out = new PrintWriter(new BufferedWriter(new FileWriter("RecuentoDePalabras.txt")));
+
+            out.println("La cantidad de palabras en el texto es " + map.size());
+            map.forEach((key, value) -> {out.println(key + " = " + value);});
+
+            out.close();
+        } catch (Exception e){
+            System.err.println(e);
+        }
+
+
+
+
+    }
+}
+
+{% endhighlight %}
